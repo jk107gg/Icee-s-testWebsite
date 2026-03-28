@@ -4,41 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Norchester University | Academic Research & Student Resources</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f9fbff;
+      --bg: #f7f6f2;
       --card: #ffffff;
-      --text: #1e293b;
-      --muted: #60738a;
-      --primary: #1b5ed7;
-      --primary-soft: #edf3ff;
-      --border: #d8e2f2;
-      --shadow: 0 8px 25px rgba(13, 45, 92, 0.08);
-      --radius: 12px;
+      --text: #1c1c1e;
+      --muted: #6b7280;
+      --primary: #1a3a6b;
+      --primary-soft: #edf1f9;
+      --accent: #b5862a;
+      --border: #dde3ee;
+      --shadow: 0 4px 20px rgba(20,40,80,0.07);
+      --radius: 10px;
     }
 
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      margin: 0;
       min-height: 100vh;
-      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Source Sans 3', sans-serif;
       color: var(--text);
       background: var(--bg);
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
-    .container {
-      width: min(1200px, 92%);
-      margin: 0 auto;
-      padding: 1.4rem 0 2.5rem;
-    }
-
+    /* ── NAV ── */
     header.topbar {
       position: sticky;
       top: 0;
-      z-index: 10;
-      background: #fff;
-      border-bottom: 1px solid #e2e8f0;
+      z-index: 100;
+      background: var(--primary);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
     }
 
     .navbar {
@@ -46,295 +43,589 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: 0.85rem 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 60px;
     }
 
     .brand {
       display: flex;
-      align-items: baseline;
-      gap: 0.4rem;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--primary);
+      align-items: center;
+      gap: 0.75rem;
     }
-    .brand span { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.04em; }
+
+    .brand-seal {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      color: white;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-name {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-sub {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
 
     .nav-links {
       display: flex;
-      gap: 1rem;
+      gap: 0.2rem;
       list-style: none;
-      padding: 0;
-      margin: 0;
     }
+
     .nav-links a {
       text-decoration: none;
-      color: var(--text);
-      padding: 0.38rem 0.7rem;
-      border-radius: 6px;
+      color: rgba(255,255,255,0.85);
+      padding: 0.4rem 0.8rem;
+      border-radius: 5px;
+      font-size: 0.88rem;
       font-weight: 500;
-      transition: all 0.2s ease;
-    }
-    .nav-links a:hover,
-    .nav-links a:focus-visible {
-      background: var(--primary-soft);
-      color: var(--primary);
-      outline: none;
+      letter-spacing: 0.02em;
+      transition: all 0.18s;
     }
 
-    .hero {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      margin-top: 1rem;
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    /* ── HERO BANNER ── */
+    .hero-banner {
+      background: linear-gradient(135deg, var(--primary) 0%, #0f2547 100%);
+      color: white;
+      padding: 3.5rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-banner h1 {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      position: relative;
+    }
+
+    .hero-banner p {
+      margin-top: 0.5rem;
+      color: rgba(255,255,255,0.7);
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .hero-banner .tagline {
+      margin-top: 1.2rem;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+
+    /* ── GOLD DIVIDER ── */
+    .divider {
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    /* ── MAIN CONTENT ── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
       padding: 2rem;
     }
-    .hero h1 { margin: 0; font-size: clamp(2rem, 4vw, 2.9rem); }
-    .hero p { margin: 0.6rem 0 0; color: var(--muted); font-size: 1.05rem; }
 
-    .grid {
+    .section-title {
+      font-family: 'Lora', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1.2rem;
+      display: inline-block;
+    }
+
+    .grid-3 {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
-      margin-top: 1.3rem;
+      margin-bottom: 2rem;
     }
 
     .card {
       background: var(--card);
-      border: 1px solid #e5ebf5;
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 1.1rem;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .card:hover,
-    .card:focus-within {
-      transform: translateY(-3px);
-      border-color: var(--primary);
-    }
-    .card h3 { margin-top: 0; margin-bottom: 0.6rem; font-size: 1.1rem; }
-    .card p, .card li { color: var(--muted); font-size: 0.97rem; }
-
-    .section-title {
-      margin: 1.4rem 0 0.7rem;
-      border-left: 4px solid var(--primary);
-      padding-left: 0.75rem;
-      font-size: 1.25rem;
-      color: var(--text);
+      padding: 1.3rem;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .welcome { margin-top: 1.1rem; padding: 1rem 1.2rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(20,40,80,0.12);
+    }
 
-    .stacked { display: grid; gap: 1rem; }
+    .card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
 
-    .updates {
+    .card h3 {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .updates-list {
       list-style: none;
-      margin: 0;
-      padding: 0;
       display: grid;
-      gap: 0.9rem;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
     }
-    .updates li {
-      background: #ffffff;
-      border: 1px solid #dbe7f5;
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
+
+    .updates-list li {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
     }
-    .updates time { display: inline-block; color: var(--primary); margin-bottom: 0.25rem; font-size: 0.8rem; }
-    .updates strong { color: var(--text); }
+
+    .updates-list time {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .updates-list strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--primary);
+      margin: 0.15rem 0;
+    }
+
+    .updates-list span {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
 
     footer {
-      margin-top: 1.8rem;
-      color: #566b83;
-      font-size: 0.9rem;
-      padding: 1.3rem 0 0.8rem;
-      border-top: 1px solid #e4e9f3;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.6rem;
+      background: var(--primary);
+      color: rgba(255,255,255,0.6);
+      font-size: 0.85rem;
+      padding: 1.5rem 2rem;
+      margin-top: 2rem;
+      text-align: center;
     }
-    footer a { color: var(--muted); text-decoration: none; }
-    footer a:hover { color: var(--primary); }
 
-    #break-time {
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    footer .footer-links { margin-top: 0.4rem; }
+    footer .footer-links a { margin: 0 0.5rem; }
+
+    /* ═══════════════════════════════════════════
+       SECRET GAME OVERLAY
+    ═══════════════════════════════════════════ */
+    #game-overlay {
       display: none;
-      margin-top: 1rem;
-      padding: 1.1rem;
-      border-radius: 12px;
-      border: 1px dashed #b8c9e3;
-      background: #eef3ff;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #0f0f13;
+      flex-direction: column;
     }
 
-    .break-visible #break-time { display: block; }
+    #game-overlay.active {
+      display: flex;
+    }
 
+    .game-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #1a1a24;
+      padding: 0.6rem 1rem;
+      border-bottom: 2px solid #2a2a3a;
+      flex-shrink: 0;
+    }
+
+    .game-topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .game-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .game-title {
+      color: #888;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .game-hint {
+      color: #444;
+      font-size: 0.72rem;
+    }
+
+    .game-close-btn {
+      background: none;
+      border: 1px solid #333;
+      color: #666;
+      padding: 0.25rem 0.75rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      transition: all 0.2s;
+    }
+
+    .game-close-btn:hover {
+      background: #ff4444;
+      color: white;
+      border-color: #ff4444;
+    }
+
+    .game-nav {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      background: #141418;
+      border-bottom: 1px solid #222;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .game-tab {
+      background: #1e1e2a;
+      border: 1px solid #2e2e40;
+      color: #777;
+      padding: 0.35rem 0.9rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: all 0.18s;
+      font-family: 'Source Sans 3', sans-serif;
+    }
+
+    .game-tab:hover {
+      background: #252535;
+      color: #aaa;
+    }
+
+    .game-tab.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .game-frame-area {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .game-frame-area iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .game-placeholder {
+      text-align: center;
+      color: #444;
+    }
+
+    .game-placeholder h2 {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+
+    .game-placeholder p {
+      font-size: 0.85rem;
+    }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
     }
-
-    @media (max-width: 700px) {
-      .navbar { flex-wrap: wrap; justify-content: center; }
-      .nav-links { flex-wrap: wrap; justify-content: center; }
-      .grid { grid-template-columns: 1fr; }
+    @media (max-width: 640px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .navbar { padding: 0 1rem; }
+      .nav-links a { font-size: 0.78rem; padding: 0.35rem 0.5rem; }
     }
   </style>
 </head>
 <body>
+
+  <!-- ── NORMAL UNIVERSITY PAGE ── -->
   <header class="topbar">
-    <div class="container navbar">
+    <div class="navbar">
       <div class="brand">
-        <strong>Norchester University</strong>
-        <span>Research & Student Hub</span>
+        <div class="brand-seal">NU</div>
+        <div class="brand-text">
+          <span class="brand-name">Norchester University</span>
+          <span class="brand-sub">Est. 1892 · Research &amp; Innovation</span>
+        </div>
       </div>
       <nav>
-        <ul class="nav-links" aria-label="Primary navigation">
+        <ul class="nav-links">
           <li><a href="#home">Home</a></li>
           <li><a href="#research">Research</a></li>
           <li><a href="#library">Library</a></li>
-          <li><a href="#portal">Student Portal</a></li>
+          <li><a href="#portal">Portal</a></li>
           <li><a href="#about">About</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main class="container" id="home">
-    <section class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title">Norchester University</h1>
-      <p>Academic Research & Student Resources</p>
-      <div class="welcome">
-        <p>Welcome to Norchester University, a leading institution empowering future scholars, researchers, and professionals. Explore interdisciplinary research programs, advanced digital resources, and student tools designed to support your academic success.</p>
-      </div>
-    </section>
+  <div class="hero-banner">
+    <h1>Norchester University</h1>
+    <p>Academic Research &amp; Student Resources</p>
+    <p class="tagline">Empowering scholars, researchers, and professionals since 1892. Explore interdisciplinary research and digital resources designed for your success.</p>
+  </div>
+  <div class="divider"></div>
 
-    <section id="research" class="stacked">
+  <main class="container" id="home">
+
+    <section id="research" style="margin-top:2rem">
       <h2 class="section-title">Research Resources</h2>
-      <div class="grid">
-        <article class="card">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🔬</div>
           <h3>Center for Data Science</h3>
           <p>Access datasets, labs, and collaboration teams focused on AI, sustainability, and computational modeling.</p>
-        </article>
-        <article class="card">
-          <h3>Research Publication Archive</h3>
-          <p>Browse peer-reviewed papers, technical reports, and open-access journals produced by our faculty and doctoral candidates.</p>
-        </article>
-        <article class="card">
-          <h3>Grant & Funding Support</h3>
+        </div>
+        <div class="card">
+          <div class="card-icon">📄</div>
+          <h3>Publication Archive</h3>
+          <p>Browse peer-reviewed papers, technical reports, and open-access journals from faculty and doctoral candidates.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💰</div>
+          <h3>Grant &amp; Funding Support</h3>
           <p>Find grant opportunities, proposal templates, and mentorship for securing research funding.</p>
-        </article>
+        </div>
       </div>
     </section>
 
-    <section id="portal" class="stacked">
+    <section id="portal">
       <h2 class="section-title">Student Tools</h2>
-      <div class="grid">
-        <article class="card">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">📅</div>
           <h3>Academic Calendar</h3>
           <p>Track deadlines, exams, and term schedules in a centralized calendar.</p>
-        </article>
-        <article class="card">
+        </div>
+        <div class="card">
+          <div class="card-icon">🎓</div>
           <h3>Course Management</h3>
-          <p>Register classes, check grades, and view curriculum plans through your portal login.</p>
-        </article>
-        <article class="card">
+          <p>Register for classes, check grades, and view curriculum plans through your portal login.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🤝</div>
           <h3>Support Services</h3>
           <p>Request tutoring, counseling, and accessibility resources to help you thrive.</p>
-        </article>
+        </div>
       </div>
     </section>
 
-    <section id="updates" class="stacked">
+    <section id="updates">
       <h2 class="section-title">Latest Updates</h2>
-      <ul class="updates">
+      <ul class="updates-list">
         <li>
-          <time datetime="2026-03-20">March 20, 2026</time>
-          <strong>Winter research symposium announced</strong><br />
-          Join presenters from 30 departments on April 8 for poster sessions and keynote talks.
+          <time>March 20, 2026</time>
+          <strong>Winter Research Symposium Announced</strong>
+          <span>Join presenters from 30 departments on April 8 for poster sessions and keynote talks.</span>
         </li>
         <li>
-          <time datetime="2026-03-25">March 25, 2026</time>
-          <strong>New digital library subscriptions</strong><br />
-          Access new archives for engineering, sociology, and digital humanities research.
+          <time>March 25, 2026</time>
+          <strong>New Digital Library Subscriptions</strong>
+          <span>Access new archives for engineering, sociology, and digital humanities research.</span>
         </li>
         <li>
-          <time datetime="2026-03-27">March 27, 2026</time>
-          <strong>Portal maintenance window</strong><br />
-          Scheduled downtime on April 2, 1:00-3:00 AM UTC for system upgrades.
+          <time>March 27, 2026</time>
+          <strong>Student Portal Maintenance Window</strong>
+          <span>Scheduled downtime on April 2, 1:00–3:00 AM UTC for system upgrades.</span>
         </li>
       </ul>
     </section>
 
-    <section id="library" class="stacked">
+    <section id="library">
       <h2 class="section-title">Library Highlights</h2>
-      <div class="grid">
-        <article class="card">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">📚</div>
           <h3>Digital Collections</h3>
           <p>Extensive e-books, journals, and archives available on demand.</p>
-        </article>
-        <article class="card">
+        </div>
+        <div class="card">
+          <div class="card-icon">🏛️</div>
           <h3>Study Spaces</h3>
           <p>Reserve quiet rooms, group study zones, and remote access workstations.</p>
-        </article>
-        <article class="card">
+        </div>
+        <div class="card">
+          <div class="card-icon">💬</div>
           <h3>Research Consultation</h3>
           <p>Schedule a librarian for citation help, literature reviews, and research strategy.</p>
-        </article>
+        </div>
       </div>
     </section>
 
-    <section id="about" class="stacked">
+    <section id="about" style="margin-bottom:1rem">
       <h2 class="section-title">About Norchester</h2>
-      <p>Norchester University is committed to inclusive excellence in teaching and research. Our community blends tradition with innovation to prepare students for global impact.</p>
-    </section>
-
-    <section id="break-time" aria-hidden="true" class="hidden-break">
-      <div id="break-time">
-        <h2>Break Time</h2>
-        <p>This is your placeholder page for a short rest. Take a minute and stretch! (Toggle with Ctrl+B.)</p>
+      <div class="card" style="display:inline-block;width:100%">
+        <p style="color:var(--muted)">Norchester University is committed to inclusive excellence in teaching and research. Our community blends tradition with innovation to prepare students for global impact. Founded in 1892, we serve over 18,000 students across six colleges and forty-two research centers worldwide.</p>
       </div>
     </section>
+
   </main>
 
-  <footer class="container">
-    <div>&copy; 2026 Norchester University • All rights reserved.</div>
-    <div>
-      <a href="#home">Home</a> ·
-      <a href="#research">Research</a> ·
-      <a href="#library">Library</a> ·
-      <a href="#portal">Student Portal</a> ·
+  <footer>
+    <div>&copy; 2026 Norchester University &bull; All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#research">Research</a>
+      <a href="#library">Library</a>
+      <a href="#portal">Portal</a>
       <a href="#about">About</a>
     </div>
   </footer>
 
+
+  <!-- ══════════════════════════════════════════
+       SECRET GAME OVERLAY (hidden by default)
+  ═══════════════════════════════════════════ -->
+  <div id="game-overlay" role="dialog" aria-label="Study break">
+    <div class="game-topbar">
+      <div class="game-topbar-left">
+        <div class="game-dot dot-red"></div>
+        <div class="game-dot dot-yellow"></div>
+        <div class="game-dot dot-green"></div>
+        <span class="game-title">Study Break</span>
+      </div>
+      <span class="game-hint">Press <kbd style="background:#222;color:#666;padding:1px 5px;border-radius:3px;font-size:0.7rem">Esc</kbd> to close</span>
+      <button class="game-close-btn" onclick="closeGames()">✕ Close</button>
+    </div>
+
+    <div class="game-nav" id="game-nav">
+      <button class="game-tab active" onclick="loadGame(0, this)">🏓 Ping Pong</button>
+      <button class="game-tab" onclick="loadGame(1, this)">🐍 Snake</button>
+      <button class="game-tab" onclick="loadGame(2, this)">🎮 Pac-Man</button>
+      <button class="game-tab" onclick="loadGame(3, this)">🧩 2048</button>
+      <button class="game-tab" onclick="loadGame(4, this)">✈️ Flappy</button>
+      <button class="game-tab" onclick="loadGame(5, this)">🔵 Agar.io</button>
+    </div>
+
+    <div class="game-frame-area">
+      <iframe id="game-frame" src="" allowfullscreen></iframe>
+    </div>
+  </div>
+
+
   <script>
-    // Hidden/shortcut break-time toggle
-    function toggleBreakTime() {
-      document.body.classList.toggle('break-visible');
-      var section = document.getElementById('break-time');
-      if (section.getAttribute('aria-hidden') === 'true') {
-        section.setAttribute('aria-hidden', 'false');
-      } else {
-        section.setAttribute('aria-hidden', 'true');
+    // ── Game URLs (all free/unblocked embed sources) ──
+    const games = [
+      'https://www.ponggame.org/',
+      'https://playsnake.org/',
+      'https://freepacman.org/',
+      'https://play2048.co/',
+      'https://flappybird.io/',
+      'https://agar.io/',
+    ];
+
+    let gameOpen = false;
+
+    function openGames() {
+      const overlay = document.getElementById('game-overlay');
+      overlay.classList.add('active');
+      gameOpen = true;
+      // Load first game if nothing loaded yet
+      if (!document.getElementById('game-frame').src || document.getElementById('game-frame').src === window.location.href) {
+        loadGame(0, document.querySelector('.game-tab'));
       }
     }
 
-    document.addEventListener('keydown', function (e) {
+    function closeGames() {
+      document.getElementById('game-overlay').classList.remove('active');
+      gameOpen = false;
+    }
+
+    function loadGame(index, btn) {
+      document.getElementById('game-frame').src = games[index];
+      document.querySelectorAll('.game-tab').forEach(t => t.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    // ── Keyboard shortcuts ──
+    document.addEventListener('keydown', function(e) {
+      // Ctrl+G or Cmd+G = open games
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'g') {
+        e.preventDefault();
+        openGames();
+      }
+      // Escape = close games
+      if (e.key === 'Escape' && gameOpen) {
+        closeGames();
+      }
+      // Legacy Ctrl+B support
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
         e.preventDefault();
-        toggleBreakTime();
+        gameOpen ? closeGames() : openGames();
       }
     });
-
-    // Encapsulated hidden button for accessibility
-    var hiddenBtn = document.createElement('button');
-    hiddenBtn.style.position = 'absolute';
-    hiddenBtn.style.left = '-9999px';
-    hiddenBtn.style.width = '1px';
-    hiddenBtn.style.height = '1px';
-    hiddenBtn.setAttribute('aria-label', 'Toggle break time section');
-    hiddenBtn.textContent = 'Toggle Break Time';
-    hiddenBtn.onclick = toggleBreakTime;
-    document.body.appendChild(hiddenBtn);
   </script>
+
 </body>
 </html>
