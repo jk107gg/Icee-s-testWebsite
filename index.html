@@ -286,7 +286,7 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
 
 /* game card images */
 .gh-card{position:relative;overflow:hidden;}
-.gh-card-bg{position:absolute;inset:0;opacity:0.35;transition:opacity .18s;border-radius:13px;background-size:cover;background-position:center;}
+.gh-card-bg{position:absolute;inset:0;opacity:0.35;transition:opacity .18s;border-radius:13px;background-size:cover;background-position:center;background-color:rgba(255,255,255,.03);}
 .gh-card:hover .gh-card-bg{opacity:0.55;}
 .gh-card.played .gh-card-bg{opacity:0.75;filter:hue-rotate(200deg) saturate(3) brightness(0.8);} .gh-card.played{box-shadow:0 0 0 2px rgba(var(--gblue-rgb),.8),0 6px 24px rgba(var(--gblue-rgb),.3);border-color:rgba(var(--gblue-rgb),.8);}
 .gh-card-tanuki .gh-card-bg{background-image:url('https://assets.nintendo.com/image/upload/q_auto/f_auto/store/software/switch/70010000028522/40b2e5a70c32922326de3732b6b2f17f7773e14caa70296ff43379e6ca92676e');}
@@ -896,7 +896,7 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
       <button class="gtab" data-index="21" onclick="showGame(21,this)"><span class="gtab-icon">🚪</span> That's Not My Neighbor<span class="gtab-plays" id="plays-21">0</span></button>
     </div>
     <div class="game-content">
-      <div id="game-home"><div class="game-particles" id="particles"></div><button class="theme-btn" onclick="cycleTheme()">🎨 Theme</button>
+      <div id="game-home" style="display:none"><div class="game-particles" id="particles"></div><button class="theme-btn" onclick="cycleTheme()">🎨 Theme</button>
         <div class="gh-orb gh-orb-1"></div>
         <div class="gh-orb gh-orb-2"></div>
         <div class="gh-inner">
@@ -970,7 +970,10 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
               <div class="gh-card gh-card-eggycar" data-cat="Arcade" data-idx="20" onclick="showGame(20,null)"><button class="gh-card-fav-btn" onclick="toggleFav(20,event)" id="fav-btn-20">☆</button><div class="gh-card-bg"></div><div class="gh-card-content"><div class="gh-card-icon">🥚</div><div class="gh-card-name">Eggy Car</div><div class="gh-card-tag">Arcade</div><div class="gh-card-plays"></div></div></div>
               <div class="gh-card gh-card-tnnmn" data-cat="Horror" data-idx="21" onclick="showGame(21,null)"><button class="gh-card-fav-btn" onclick="toggleFav(21,event)" id="fav-btn-21">☆</button><div class="gh-card-bg"></div><div class="gh-card-content"><div class="gh-card-icon">🚪</div><div class="gh-card-name">That's Not My Neighbor</div><div class="gh-card-tag">Horror</div><div class="gh-card-plays"></div></div></div>
             </div>
-      </div>
+          </div><!-- /main-grid wrap -->
+        </div><!-- /gh-inner -->
+      </div><!-- /gh-ai section -->
+      </div><!-- /game-home -->
 
       <!-- GAME VIEW -->
       <div id="game-view" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden;">
@@ -1143,7 +1146,7 @@ var chatListener = null;
 var chatInitialized = false;
 
 function initFirebase() {
-  if (chatInitialized) return;
+  if (chatInitialized) return; // already initializing or initialized
   chatInitialized = true;
   // load firebase from CDN
   var script1 = document.createElement('script');
@@ -1305,20 +1308,24 @@ function showAI(btn) {
 }
 
 function showGame(i, btn) {
-  setPanel('game');
-  document.getElementById('game-frame').src = gameURLs[i];
-  document.getElementById('gcb-name').textContent = gameNames[i];
+  // hide all panels, show game view
+  ['game-home','game-view','ai-panel','chat-panel','dm-panel','settings-panel'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+  var gv = document.getElementById('game-view');
+  if(gv) gv.style.display = 'flex';
+  // set iframe src
+  var frame = document.getElementById('game-frame');
+  if(frame) frame.src = gameURLs[i];
+  var nameEl = document.getElementById('gcb-name');
+  if(nameEl) nameEl.textContent = gameNames[i];
   clearTabs();
   if (btn) btn.classList.add('active');
   chatOpen = false;
-  // mark card as played (blue tint)
-  var cards = document.querySelectorAll('.gh-card');
-  if (cards[i]) cards[i].classList.add('played');
-  // increment play count
   playCounts[i] = (playCounts[i] || 0) + 1;
   saveCounts();
   updatePlayBadges();
-  // track today's plays
   try {
     var todayKey = 'nu_today_' + new Date().toDateString();
     localStorage.setItem(todayKey, (parseInt(localStorage.getItem(todayKey)||'0')+1));
@@ -2040,13 +2047,22 @@ function updateNotifBtn() {
 }
 function clearTabs(){document.querySelectorAll('.gtab').forEach(function(t){t.classList.remove('active');});}
 function openGames(){
-  document.getElementById('game-overlay').classList.add('active');
+  var overlay = document.getElementById('game-overlay');
+  overlay.classList.add('active');
   isOpen=true;
   restoreOverlaySettings();
   initFirebase();
-  setPanel('home');
+  // force all panels hidden first
+  ['game-home','game-view','ai-panel','chat-panel','dm-panel','settings-panel'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+  // then show home
+  var home = document.getElementById('game-home');
+  if(home) home.style.display = 'flex';
   clearTabs();
-  document.getElementById('tab-home-g').classList.add('active');
+  var htab = document.getElementById('tab-home-g');
+  if(htab) htab.classList.add('active');
   updateFeatured();
   updatePlayBadges();
   updateStats();
