@@ -549,6 +549,11 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
       <button class="gtab" onclick="showGame(8,this)"><span class="gtab-icon">👁️</span> Five Epsteins</button>
       <button class="gtab" onclick="showGame(9,this)"><span class="gtab-icon">🎵</span> Friday Night Funkin</button>
       <button class="gtab" onclick="showGame(10,this)"><span class="gtab-icon">🐻</span> FNAF</button>
+      <button class="gtab" onclick="showGame(11,this)"><span class="gtab-icon">🏍️</span> Moto X3M</button>
+      <button class="gtab" onclick="showGame(12,this)"><span class="gtab-icon">❤️</span> Undertale</button>
+      <button class="gtab" onclick="showGame(13,this)"><span class="gtab-icon">🔊</span> Soundboard</button>
+      <button class="gtab" onclick="showGame(14,this)"><span class="gtab-icon">📏</span> Baldi's Basics</button>
+      <button class="gtab" onclick="showGame(15,this)"><span class="gtab-icon">🦝</span> Tanuki Sunset</button>
     </div>
     <div class="game-content">
       <div id="game-home">
@@ -562,7 +567,7 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
               <div class="gh-hero-sub">8 games + AI chat — open with Ctrl+G anytime.</div>
             </div>
             <div class="gh-hero-stats">
-              <div class="gh-hstat"><div class="gh-hstat-num">11</div><div class="gh-hstat-label">Games</div></div>
+              <div class="gh-hstat"><div class="gh-hstat-num">16</div><div class="gh-hstat-label">Games</div></div>
               <div class="gh-hstat"><div class="gh-hstat-num">∞</div><div class="gh-hstat-label">Procrastination</div></div>
               <div class="gh-hstat"><div class="gh-hstat-num">0</div><div class="gh-hstat-label">Homework Done</div></div>
             </div>
@@ -593,6 +598,11 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
               <div class="gh-card" onclick="showGame(8,null)"><div class="gh-card-icon">👁️</div><div class="gh-card-name">Five Epsteins</div><div class="gh-card-tag">Horror</div></div>
               <div class="gh-card" onclick="showGame(9,null)"><div class="gh-card-icon">🎵</div><div class="gh-card-name">Friday Night Funkin</div><div class="gh-card-tag">Rhythm</div></div>
               <div class="gh-card" onclick="showGame(10,null)"><div class="gh-card-icon">🐻</div><div class="gh-card-name">FNAF</div><div class="gh-card-tag">Horror</div></div>
+              <div class="gh-card" onclick="showGame(11,null)"><div class="gh-card-icon">🏍️</div><div class="gh-card-name">Moto X3M</div><div class="gh-card-tag">Racing</div></div>
+              <div class="gh-card" onclick="showGame(12,null)"><div class="gh-card-icon">❤️</div><div class="gh-card-name">Undertale</div><div class="gh-card-tag">RPG</div></div>
+              <div class="gh-card" onclick="showGame(13,null)"><div class="gh-card-icon">🔊</div><div class="gh-card-name">Soundboard</div><div class="gh-card-tag">Fun</div></div>
+              <div class="gh-card" onclick="showGame(14,null)"><div class="gh-card-icon">📏</div><div class="gh-card-name">Baldi's Basics</div><div class="gh-card-tag">Horror</div></div>
+              <div class="gh-card" onclick="showGame(15,null)"><div class="gh-card-icon">🦝</div><div class="gh-card-name">Tanuki Sunset</div><div class="gh-card-tag">Chill</div></div>
             </div>
           </div>
           <div>
@@ -742,8 +752,8 @@ function doLogin(){
   },900+Math.random()*600);
 }
 
-var gameURLs=['https://www.ponggame.org/','https://playsnake.org/','https://freepacman.org/','https://play2048.co/','https://flappybird.io/','https://agar.io/','https://www.solitr.com/klondike','https://minesweeperonline.com/','https://d3rtzzzsiu7gdr.cloudfront.net/files/fiveepsteins/index.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/funkinnew/game.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/fnaf/game/index.html'];
-var gameNames=['Ping Pong','Snake','Pac-Man','2048','Flappy Bird','Agar.io','Solitaire','Minesweeper','Five Epsteins','Friday Night Funkin','FNAF'];
+var gameURLs=['https://www.ponggame.org/','https://playsnake.org/','https://freepacman.org/','https://play2048.co/','https://flappybird.io/','https://agar.io/','https://www.solitr.com/klondike','https://minesweeperonline.com/','https://d3rtzzzsiu7gdr.cloudfront.net/files/fiveepsteins/index.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/funkinnew/game.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/fnaf/game/index.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/projects/motox3m/index.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/utale/index.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/projects/soundboard/index.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/baldisbasics/game.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/tanuki-sunset/game/index.html'];
+var gameNames=['Ping Pong','Snake','Pac-Man','2048','Flappy Bird','Agar.io','Solitaire','Minesweeper','Five Epsteins','Friday Night Funkin','FNAF','Moto X3M','Undertale','Soundboard','Baldi\'s Basics','Tanuki Sunset'];
 var isOpen=false;
 
 function setPanel(which){
