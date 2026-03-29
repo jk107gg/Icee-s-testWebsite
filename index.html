@@ -180,6 +180,9 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
 .gtab-chat{color:var(--ggreen) !important;opacity:.8;}
 .gtab-chat:hover{background:rgba(34,211,160,.08) !important;color:var(--ggreen) !important;opacity:1;}
 .gtab-chat.active{background:rgba(34,211,160,.15) !important;color:#6effd8 !important;opacity:1;box-shadow:inset 0 0 0 1px rgba(34,211,160,.22) !important;}
+.chat-notif{display:none;background:#ff4444;color:#fff;font-size:.58rem;font-weight:700;border-radius:999px;padding:.08rem .38rem;min-width:16px;text-align:center;line-height:1.4;animation:notifPop .2s cubic-bezier(.175,.885,.32,1.275);}
+.chat-notif.show{display:inline-block;}
+@keyframes notifPop{from{transform:scale(0)}to{transform:scale(1)}}
 .gtab-ai:hover{background:rgba(79,142,247,.1) !important;color:var(--gblue) !important;opacity:1;}
 .gtab-ai.active{background:rgba(79,142,247,.15) !important;color:#a8caff !important;opacity:1;box-shadow:inset 0 0 0 1px rgba(79,142,247,.22) !important;}
 
@@ -597,7 +600,7 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
       <div class="gsidebar-section">Navigation</div>
       <button class="gtab active" id="tab-home-g" onclick="showHome(this)"><span class="gtab-icon">🏠</span> Home</button>
       <button class="gtab gtab-ai" id="tab-ai" onclick="showAI(this)"><span class="gtab-icon">🤖</span> AI Chat</button>
-      <button class="gtab gtab-chat" id="tab-chat" onclick="showChat(this)"><span class="gtab-icon">💬</span> Global Chat</button>
+      <button class="gtab gtab-chat" id="tab-chat" onclick="showChat(this)"><span class="gtab-icon">💬</span> Global Chat<span class="chat-notif" id="chat-notif"></span></button>
       <div class="gsidebar-section">Games</div>
       <button class="gtab" data-index="0" onclick="showGame(0,this)"><span class="gtab-icon">🏓</span> Ping Pong<span class="gtab-plays" id="plays-0">0</span></button>
       <button class="gtab" data-index="1" onclick="showGame(1,this)"><span class="gtab-icon">🐍</span> Snake<span class="gtab-plays" id="plays-1">0</span></button>
@@ -779,6 +782,26 @@ function initFirebase() {
   document.head.appendChild(script1);
 }
 
+var chatOpen = false;
+var unreadCount = 0;
+
+function updateNotifBadge() {
+  var badge = document.getElementById('chat-notif');
+  if (!badge) return;
+  if (unreadCount > 0 && !chatOpen) {
+    badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+    badge.classList.add('show');
+  } else {
+    badge.classList.remove('show');
+    badge.textContent = '';
+  }
+}
+
+function clearNotif() {
+  unreadCount = 0;
+  updateNotifBadge();
+}
+
 function setupChat() {
   document.getElementById('chat-status').textContent = 'Connected';
 
@@ -796,10 +819,20 @@ function setupChat() {
   var msgContainer = document.getElementById('chat-messages');
   msgContainer.innerHTML = '';
 
+  var firstLoad = true;
   chatRef.limitToLast(50).on('child_added', function(snap) {
     var msg = snap.val();
     if (!msg) return;
     appendChatMsg(msg, snap.key);
+    // only count as unread if not first load batch and chat isn't open
+    if (!firstLoad && !chatOpen) {
+      unreadCount++;
+      updateNotifBadge();
+    }
+  });
+  // after initial load, mark firstLoad false
+  chatRef.limitToLast(50).once('value', function() {
+    firstLoad = false;
   });
 }
 
@@ -856,7 +889,42 @@ function showChat(btn) {
   setPanel('chat');
   clearTabs();
   if (btn) btn.classList.add('active');
+  chatOpen = true;
+  clearNotif();
   initFirebase();
+}
+
+function showHome(btn) {
+  setPanel('home');
+  clearTabs();
+  if (btn) btn.classList.add('active');
+  chatOpen = false;
+  updateFeatured();
+  updatePlayBadges();
+}
+
+function showAI(btn) {
+  setPanel('ai');
+  clearTabs();
+  if (btn) btn.classList.add('active');
+  else document.getElementById('tab-ai').classList.add('active');
+  chatOpen = false;
+}
+
+function showGame(i, btn) {
+  setPanel('game');
+  document.getElementById('game-frame').src = gameURLs[i];
+  document.getElementById('gcb-name').textContent = gameNames[i];
+  clearTabs();
+  if (btn) btn.classList.add('active');
+  chatOpen = false;
+  // mark card as played (blue tint)
+  var cards = document.querySelectorAll('.gh-card');
+  if (cards[i]) cards[i].classList.add('played');
+  // increment play count
+  playCounts[i] = (playCounts[i] || 0) + 1;
+  saveCounts();
+  updatePlayBadges();
 }
 
 var GROQ_API_KEY = 'PASTE_YOUR_GROQ_KEY_HERE';
@@ -1023,23 +1091,7 @@ function openGames(){
   updateFeatured();
   updatePlayBadges();
 }
-function closeGames(){document.getElementById('game-overlay').classList.remove('active');isOpen=false;}
-function showHome(btn){setPanel('home');clearTabs();if(btn)btn.classList.add('active');updateFeatured();updatePlayBadges();}
-function showAI(btn){setPanel('ai');clearTabs();if(btn)btn.classList.add('active');else document.getElementById('tab-ai').classList.add('active');}
-function showGame(i,btn){
-  setPanel('game');
-  document.getElementById('game-frame').src=gameURLs[i];
-  document.getElementById('gcb-name').textContent=gameNames[i];
-  clearTabs();
-  if(btn)btn.classList.add('active');
-  // mark card as played (blue tint)
-  var cards=document.querySelectorAll('.gh-card');
-  if(cards[i]) cards[i].classList.add('played');
-  // increment play count
-  playCounts[i]=(playCounts[i]||0)+1;
-  saveCounts();
-  updatePlayBadges();
-}
+function closeGames(){document.getElementById('game-overlay').classList.remove('active');isOpen=false;chatOpen=false;}
 
 document.addEventListener('keydown',function(e){
   var mod=e.ctrlKey||e.metaKey;
