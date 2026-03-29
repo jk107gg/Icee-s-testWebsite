@@ -148,8 +148,7 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
 .footer-col a:hover{color:var(--gold2);}
 .footer-bottom{background:#111c2e;color:rgba(255,255,255,.3);font-size:.75rem;padding:.8rem 2rem;text-align:center;}
 
-#launch-btn{position:fixed;bottom:1.5rem;right:1.5rem;z-index:8000;width:50px;height:50px;border-radius:50%;background:var(--navy);border:2px solid var(--gold);color:var(--gold);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);transition:all .2s;font-family:'Outfit',sans-serif;}
-#launch-btn:hover{background:var(--gold);color:var(--navy);transform:scale(1.1);}
+#launch-btn{display:none;}
 
 /* ══════ GAME OVERLAY ══════ */
 #game-overlay{display:none;position:fixed;inset:0;z-index:9999;background:var(--gb);flex-direction:column;font-family:'DM Sans','Outfit',sans-serif;width:100vw;height:100vh;overflow:hidden;}
@@ -267,7 +266,14 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
 .ai-send:hover{background:linear-gradient(135deg,#3560b8,#2a4e9a);color:#c0deff;box-shadow:0 0 22px rgba(79,142,247,.3);}
 .ai-send:disabled{opacity:.2;cursor:not-allowed;box-shadow:none;}
 
-@media(max-width:960px){.two-col{grid-template-columns:1fr;}.hero-stats{display:none;}.grid-3{grid-template-columns:repeat(2,1fr);}.footer-inner{grid-template-columns:1fr 1fr;}}
+.gtab-plays{margin-left:auto;font-size:.6rem;color:rgba(255,255,255,.18);background:rgba(255,255,255,.05);border-radius:99px;padding:.08rem .4rem;flex-shrink:0;}
+.gh-card-plays{font-size:.58rem;color:rgba(255,255,255,.18);margin-top:.15rem;}
+/* game search */
+.game-search-wrap{padding:.6rem .5rem .3rem;flex-shrink:0;}
+.game-search-input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:.4rem .65rem;color:rgba(255,255,255,.7);font-size:.75rem;font-family:'DM Sans','Outfit',sans-serif;outline:none;transition:border-color .2s;}
+.game-search-input::placeholder{color:rgba(255,255,255,.2);}
+.game-search-input:focus{border-color:rgba(79,142,247,.4);}
+.gtab.hidden{display:none;}{.two-col{grid-template-columns:1fr;}.hero-stats{display:none;}.grid-3{grid-template-columns:repeat(2,1fr);}.footer-inner{grid-template-columns:1fr 1fr;}}
 @media(max-width:600px){.grid-3{grid-template-columns:1fr;}.navbar{padding:0 1rem;}.section-tabs-inner{overflow-x:auto;}.stab{white-space:nowrap;}.utility-bar{display:none;}.game-sidebar{width:160px;}.gh-grid{grid-template-columns:repeat(2,1fr);}.gh-hero{flex-direction:column;}.gh-hero-stats{display:none;}}
 </style>
 </head>
@@ -534,26 +540,29 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
   </div>
   <div class="game-layout">
     <div class="game-sidebar">
+      <div class="game-search-wrap">
+        <input class="game-search-input" id="game-search" placeholder="🔍 Search games..." oninput="filterGames(this.value)"/>
+      </div>
       <div class="gsidebar-section">Navigation</div>
       <button class="gtab active" id="tab-home-g" onclick="showHome(this)"><span class="gtab-icon">🏠</span> Home</button>
       <button class="gtab gtab-ai" id="tab-ai" onclick="showAI(this)"><span class="gtab-icon">🤖</span> AI Chat</button>
       <div class="gsidebar-section">Games</div>
-      <button class="gtab" onclick="showGame(0,this)"><span class="gtab-icon">🏓</span> Ping Pong</button>
-      <button class="gtab" onclick="showGame(1,this)"><span class="gtab-icon">🐍</span> Snake</button>
-      <button class="gtab" onclick="showGame(2,this)"><span class="gtab-icon">👾</span> Pac-Man</button>
-      <button class="gtab" onclick="showGame(3,this)"><span class="gtab-icon">🧩</span> 2048</button>
-      <button class="gtab" onclick="showGame(4,this)"><span class="gtab-icon">✈️</span> Flappy Bird</button>
-      <button class="gtab" onclick="showGame(5,this)"><span class="gtab-icon">🔵</span> Agar.io</button>
-      <button class="gtab" onclick="showGame(6,this)"><span class="gtab-icon">🃏</span> Solitaire</button>
-      <button class="gtab" onclick="showGame(7,this)"><span class="gtab-icon">💣</span> Minesweeper</button>
-      <button class="gtab" onclick="showGame(8,this)"><span class="gtab-icon">👁️</span> Five Epsteins</button>
-      <button class="gtab" onclick="showGame(9,this)"><span class="gtab-icon">🎵</span> Friday Night Funkin</button>
-      <button class="gtab" onclick="showGame(10,this)"><span class="gtab-icon">🐻</span> FNAF</button>
-      <button class="gtab" onclick="showGame(11,this)"><span class="gtab-icon">🏍️</span> Moto X3M</button>
-      <button class="gtab" onclick="showGame(12,this)"><span class="gtab-icon">❤️</span> Undertale</button>
-      <button class="gtab" onclick="showGame(13,this)"><span class="gtab-icon">🔊</span> Soundboard</button>
-      <button class="gtab" onclick="showGame(14,this)"><span class="gtab-icon">📏</span> Baldi's Basics</button>
-      <button class="gtab" onclick="showGame(15,this)"><span class="gtab-icon">🦝</span> Tanuki Sunset</button>
+      <button class="gtab" data-index="0" onclick="showGame(0,this)"><span class="gtab-icon">🏓</span> Ping Pong<span class="gtab-plays" id="plays-0">0</span></button>
+      <button class="gtab" data-index="1" onclick="showGame(1,this)"><span class="gtab-icon">🐍</span> Snake<span class="gtab-plays" id="plays-1">0</span></button>
+      <button class="gtab" data-index="2" onclick="showGame(2,this)"><span class="gtab-icon">👾</span> Pac-Man<span class="gtab-plays" id="plays-2">0</span></button>
+      <button class="gtab" data-index="3" onclick="showGame(3,this)"><span class="gtab-icon">🧩</span> 2048<span class="gtab-plays" id="plays-3">0</span></button>
+      <button class="gtab" data-index="4" onclick="showGame(4,this)"><span class="gtab-icon">✈️</span> Flappy Bird<span class="gtab-plays" id="plays-4">0</span></button>
+      <button class="gtab" data-index="5" onclick="showGame(5,this)"><span class="gtab-icon">🔵</span> Agar.io<span class="gtab-plays" id="plays-5">0</span></button>
+      <button class="gtab" data-index="6" onclick="showGame(6,this)"><span class="gtab-icon">🃏</span> Solitaire<span class="gtab-plays" id="plays-6">0</span></button>
+      <button class="gtab" data-index="7" onclick="showGame(7,this)"><span class="gtab-icon">💣</span> Minesweeper<span class="gtab-plays" id="plays-7">0</span></button>
+      <button class="gtab" data-index="8" onclick="showGame(8,this)"><span class="gtab-icon">👁️</span> Five Epsteins<span class="gtab-plays" id="plays-8">0</span></button>
+      <button class="gtab" data-index="9" onclick="showGame(9,this)"><span class="gtab-icon">🎵</span> Friday Night Funkin<span class="gtab-plays" id="plays-9">0</span></button>
+      <button class="gtab" data-index="10" onclick="showGame(10,this)"><span class="gtab-icon">🐻</span> FNAF<span class="gtab-plays" id="plays-10">0</span></button>
+      <button class="gtab" data-index="11" onclick="showGame(11,this)"><span class="gtab-icon">🏍️</span> Moto X3M<span class="gtab-plays" id="plays-11">0</span></button>
+      <button class="gtab" data-index="12" onclick="showGame(12,this)"><span class="gtab-icon">❤️</span> Undertale<span class="gtab-plays" id="plays-12">0</span></button>
+      <button class="gtab" data-index="13" onclick="showGame(13,this)"><span class="gtab-icon">🔊</span> Soundboard<span class="gtab-plays" id="plays-13">0</span></button>
+      <button class="gtab" data-index="14" onclick="showGame(14,this)"><span class="gtab-icon">📏</span> Baldi's Basics<span class="gtab-plays" id="plays-14">0</span></button>
+      <button class="gtab" data-index="15" onclick="showGame(15,this)"><span class="gtab-icon">🦝</span> Tanuki Sunset<span class="gtab-plays" id="plays-15">0</span></button>
     </div>
     <div class="game-content">
       <div id="game-home">
@@ -573,13 +582,13 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
             </div>
           </div>
           <div>
-            <div class="gh-section-label">Featured</div>
-            <div class="gh-featured" onclick="showGame(2,null)">
-              <div class="gh-featured-icon">👾</div>
+            <div class="gh-section-label">Featured — Most Played</div>
+            <div class="gh-featured" id="featured-card" onclick="showGame(2,null)">
+              <div class="gh-featured-icon" id="featured-icon">👾</div>
               <div>
-                <div class="gh-featured-label">⚡ Featured Game</div>
-                <div class="gh-featured-name">Pac-Man</div>
-                <div class="gh-featured-desc">The classic arcade game — dodge ghosts, eat dots, survive.</div>
+                <div class="gh-featured-label" id="featured-label">⚡ Most Played</div>
+                <div class="gh-featured-name" id="featured-name">Pac-Man</div>
+                <div class="gh-featured-desc" id="featured-desc">The classic arcade game — dodge ghosts, eat dots, survive.</div>
               </div>
               <button class="gh-featured-btn">Play Now →</button>
             </div>
@@ -587,22 +596,22 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
           <div>
             <div class="gh-section-label">All Games</div>
             <div class="gh-grid">
-              <div class="gh-card" onclick="showGame(0,null)"><div class="gh-card-icon">🏓</div><div class="gh-card-name">Ping Pong</div><div class="gh-card-tag">Arcade</div></div>
-              <div class="gh-card" onclick="showGame(1,null)"><div class="gh-card-icon">🐍</div><div class="gh-card-name">Snake</div><div class="gh-card-tag">Classic</div></div>
-              <div class="gh-card" onclick="showGame(2,null)"><div class="gh-card-icon">👾</div><div class="gh-card-name">Pac-Man</div><div class="gh-card-tag">Arcade</div></div>
-              <div class="gh-card" onclick="showGame(3,null)"><div class="gh-card-icon">🧩</div><div class="gh-card-name">2048</div><div class="gh-card-tag">Puzzle</div></div>
-              <div class="gh-card" onclick="showGame(4,null)"><div class="gh-card-icon">✈️</div><div class="gh-card-name">Flappy Bird</div><div class="gh-card-tag">Endless</div></div>
-              <div class="gh-card" onclick="showGame(5,null)"><div class="gh-card-icon">🔵</div><div class="gh-card-name">Agar.io</div><div class="gh-card-tag">Multiplayer</div></div>
-              <div class="gh-card" onclick="showGame(6,null)"><div class="gh-card-icon">🃏</div><div class="gh-card-name">Solitaire</div><div class="gh-card-tag">Card</div></div>
-              <div class="gh-card" onclick="showGame(7,null)"><div class="gh-card-icon">💣</div><div class="gh-card-name">Minesweeper</div><div class="gh-card-tag">Puzzle</div></div>
-              <div class="gh-card" onclick="showGame(8,null)"><div class="gh-card-icon">👁️</div><div class="gh-card-name">Five Epsteins</div><div class="gh-card-tag">Horror</div></div>
-              <div class="gh-card" onclick="showGame(9,null)"><div class="gh-card-icon">🎵</div><div class="gh-card-name">Friday Night Funkin</div><div class="gh-card-tag">Rhythm</div></div>
-              <div class="gh-card" onclick="showGame(10,null)"><div class="gh-card-icon">🐻</div><div class="gh-card-name">FNAF</div><div class="gh-card-tag">Horror</div></div>
-              <div class="gh-card" onclick="showGame(11,null)"><div class="gh-card-icon">🏍️</div><div class="gh-card-name">Moto X3M</div><div class="gh-card-tag">Racing</div></div>
-              <div class="gh-card" onclick="showGame(12,null)"><div class="gh-card-icon">❤️</div><div class="gh-card-name">Undertale</div><div class="gh-card-tag">RPG</div></div>
-              <div class="gh-card" onclick="showGame(13,null)"><div class="gh-card-icon">🔊</div><div class="gh-card-name">Soundboard</div><div class="gh-card-tag">Fun</div></div>
-              <div class="gh-card" onclick="showGame(14,null)"><div class="gh-card-icon">📏</div><div class="gh-card-name">Baldi's Basics</div><div class="gh-card-tag">Horror</div></div>
-              <div class="gh-card" onclick="showGame(15,null)"><div class="gh-card-icon">🦝</div><div class="gh-card-name">Tanuki Sunset</div><div class="gh-card-tag">Chill</div></div>
+              <div class="gh-card" onclick="showGame(0,null)"><div class="gh-card-icon">🏓</div><div class="gh-card-name">Ping Pong</div><div class="gh-card-tag">Arcade</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(1,null)"><div class="gh-card-icon">🐍</div><div class="gh-card-name">Snake</div><div class="gh-card-tag">Classic</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(2,null)"><div class="gh-card-icon">👾</div><div class="gh-card-name">Pac-Man</div><div class="gh-card-tag">Arcade</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(3,null)"><div class="gh-card-icon">🧩</div><div class="gh-card-name">2048</div><div class="gh-card-tag">Puzzle</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(4,null)"><div class="gh-card-icon">✈️</div><div class="gh-card-name">Flappy Bird</div><div class="gh-card-tag">Endless</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(5,null)"><div class="gh-card-icon">🔵</div><div class="gh-card-name">Agar.io</div><div class="gh-card-tag">Multiplayer</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(6,null)"><div class="gh-card-icon">🃏</div><div class="gh-card-name">Solitaire</div><div class="gh-card-tag">Card</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(7,null)"><div class="gh-card-icon">💣</div><div class="gh-card-name">Minesweeper</div><div class="gh-card-tag">Puzzle</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(8,null)"><div class="gh-card-icon">👁️</div><div class="gh-card-name">Five Epsteins</div><div class="gh-card-tag">Horror</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(9,null)"><div class="gh-card-icon">🎵</div><div class="gh-card-name">Friday Night Funkin</div><div class="gh-card-tag">Rhythm</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(10,null)"><div class="gh-card-icon">🐻</div><div class="gh-card-name">FNAF</div><div class="gh-card-tag">Horror</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(11,null)"><div class="gh-card-icon">🏍️</div><div class="gh-card-name">Moto X3M</div><div class="gh-card-tag">Racing</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(12,null)"><div class="gh-card-icon">❤️</div><div class="gh-card-name">Undertale</div><div class="gh-card-tag">RPG</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(13,null)"><div class="gh-card-icon">🔊</div><div class="gh-card-name">Soundboard</div><div class="gh-card-tag">Fun</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(14,null)"><div class="gh-card-icon">📏</div><div class="gh-card-name">Baldi's Basics</div><div class="gh-card-tag">Horror</div><div class="gh-card-plays"></div></div>
+              <div class="gh-card" onclick="showGame(15,null)"><div class="gh-card-icon">🦝</div><div class="gh-card-name">Tanuki Sunset</div><div class="gh-card-tag">Chill</div><div class="gh-card-plays"></div></div>
             </div>
           </div>
           <div>
@@ -754,24 +763,70 @@ function doLogin(){
 
 var gameURLs=['https://www.ponggame.org/','https://playsnake.org/','https://freepacman.org/','https://play2048.co/','https://flappybird.io/','https://agar.io/','https://www.solitr.com/klondike','https://minesweeperonline.com/','https://d3rtzzzsiu7gdr.cloudfront.net/files/fiveepsteins/index.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/funkinnew/game.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/fnaf/game/index.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/projects/motox3m/index.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/utale/index.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/projects/soundboard/index.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/baldisbasics/game.html','https://d3rtzzzsiu7gdr.cloudfront.net/files/tanuki-sunset/game/index.html'];
 var gameNames=['Ping Pong','Snake','Pac-Man','2048','Flappy Bird','Agar.io','Solitaire','Minesweeper','Five Epsteins','Friday Night Funkin','FNAF','Moto X3M','Undertale','Soundboard','Baldi\'s Basics','Tanuki Sunset'];
-var isOpen=false;
+var gameIcons=['🏓','🐍','👾','🧩','✈️','🔵','🃏','💣','👁️','🎵','🐻','🏍️','❤️','🔊','📏','🦝'];
+var gameDescs=['Classic paddle arcade','The original snake game','Dodge ghosts, eat dots','Slide tiles to reach 2048','Tap to fly, avoid pipes','Grow by eating others','Classic card game','Find the mines','A unique horror experience','Rhythm battle game','Five Nights at Freddy\'s','Bike stunt racing','Indie RPG classic','Fun soundboard','Education meets horror','Chill sunset skating'];
 
+// load play counts from localStorage, fall back to zeros
+var playCounts=[];
+try { playCounts=JSON.parse(localStorage.getItem('nu_playcounts'))||[]; } catch(e){}
+while(playCounts.length<gameNames.length) playCounts.push(0);
+
+function saveCounts(){try{localStorage.setItem('nu_playcounts',JSON.stringify(playCounts));}catch(e){}}
+
+function updatePlayBadges(){
+  for(var i=0;i<gameNames.length;i++){
+    var el=document.getElementById('plays-'+i);
+    if(el) el.textContent=playCounts[i]>0?(playCounts[i]>999?Math.floor(playCounts[i]/1000)+'k':playCounts[i]):'';
+  }
+}
+
+function updateFeatured(){
+  // find most played; default to Pac-Man (index 2) if all zero
+  var maxIdx=2, maxVal=0;
+  for(var i=0;i<playCounts.length;i++){if(playCounts[i]>maxVal){maxVal=playCounts[i];maxIdx=i;}}
+  var fc=document.getElementById('featured-card');
+  if(fc){
+    fc.onclick=function(){showGame(maxIdx,null);};
+    document.getElementById('featured-icon').textContent=gameIcons[maxIdx];
+    document.getElementById('featured-name').textContent=gameNames[maxIdx];
+    document.getElementById('featured-desc').textContent=gameDescs[maxIdx];
+    document.getElementById('featured-label').textContent=maxVal>0?'🔥 Most Played — '+maxVal+' plays':'⚡ Featured Game';
+  }
+  // also update home grid play counts
+  var cards=document.querySelectorAll('.gh-card');
+  cards.forEach(function(card,i){
+    var pd=card.querySelector('.gh-card-plays');
+    if(pd&&i<playCounts.length) pd.textContent=playCounts[i]>0?playCounts[i]+' plays':'';
+  });
+}
+
+function filterGames(q){
+  q=q.toLowerCase().trim();
+  var tabs=document.querySelectorAll('.game-sidebar .gtab[data-index]');
+  tabs.forEach(function(t){
+    var name=gameNames[parseInt(t.getAttribute('data-index'))].toLowerCase();
+    t.classList.toggle('hidden', q.length>0 && name.indexOf(q)===-1);
+  });
+}
+
+var isOpen=false;
 function setPanel(which){
   document.getElementById('game-home').style.display=which==='home'?'flex':'none';
   document.getElementById('game-view').style.display=which==='game'?'flex':'none';
   document.getElementById('ai-panel').style.display=which==='ai'?'flex':'none';
 }
 function clearTabs(){document.querySelectorAll('.gtab').forEach(function(t){t.classList.remove('active');});}
-
 function openGames(){
   document.getElementById('game-overlay').classList.add('active');
   isOpen=true;
   setPanel('home');
   clearTabs();
   document.getElementById('tab-home-g').classList.add('active');
+  updateFeatured();
+  updatePlayBadges();
 }
 function closeGames(){document.getElementById('game-overlay').classList.remove('active');isOpen=false;}
-function showHome(btn){setPanel('home');clearTabs();if(btn)btn.classList.add('active');}
+function showHome(btn){setPanel('home');clearTabs();if(btn)btn.classList.add('active');updateFeatured();updatePlayBadges();}
 function showAI(btn){setPanel('ai');clearTabs();if(btn)btn.classList.add('active');else document.getElementById('tab-ai').classList.add('active');}
 function showGame(i,btn){
   setPanel('game');
@@ -779,6 +834,10 @@ function showGame(i,btn){
   document.getElementById('gcb-name').textContent=gameNames[i];
   clearTabs();
   if(btn)btn.classList.add('active');
+  // increment play count
+  playCounts[i]=(playCounts[i]||0)+1;
+  saveCounts();
+  updatePlayBadges();
 }
 
 document.addEventListener('keydown',function(e){
