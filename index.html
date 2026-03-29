@@ -972,7 +972,76 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
             </div>
       </div>
 
-      <!-- DM PANEL -->
+      <!-- GAME VIEW -->
+      <div id="game-view" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden;">
+        <div class="game-content-bar">
+          <div class="gcb-dot"></div>
+          <div class="gcb-name" id="gcb-name">No game selected</div>
+        </div>
+        <div class="game-iframe-wrap" style="position:relative">
+          <iframe id="game-frame" src="" allowfullscreen allow="fullscreen; autoplay; encrypted-media; storage-access"></iframe>
+          <button class="game-fullscreen-btn" onclick="openFullscreen()">⛶ Fullscreen</button>
+        </div>
+      </div>
+
+      <!-- AI PANEL -->
+      <div id="ai-panel" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden;background:var(--gb);">
+        <div class="ai-header">
+          <div class="ai-avatar">✨</div>
+          <div>
+            <div class="ai-header-name">Icee Bot</div>
+            <div class="ai-header-status">Online &amp; ready</div>
+          </div>
+        </div>
+        <div class="ai-disclaimer"><strong>⚠ Chill zone only:</strong> Won't help with homework or anything academic — movies, music, games, life stuff only!</div>
+        <div class="ai-messages" id="ai-messages">
+          <div class="ai-msg assistant">
+            <div class="ai-msg-avatar">✨</div>
+            <div class="ai-msg-bubble">Hey! I'm Icee Bot — your non-academic companion 😄 Ask me about movies, music, games, or just vibe. What's up?</div>
+          </div>
+        </div>
+        <div class="ai-input-area">
+          <textarea class="ai-input" id="ai-input" placeholder="Chat about anything (except schoolwork)…" rows="1" onkeydown="aiKeydown(event)" oninput="autoResize(this)"></textarea>
+          <button class="ai-send" id="ai-send-btn" onclick="sendAiMessage()">➤</button>
+        </div>
+      </div>
+
+      <!-- GLOBAL CHAT PANEL -->
+      <div id="chat-panel" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden;background:var(--gb);">
+        <div class="chat-header">
+          <div class="chat-avatar">💬</div>
+          <div>
+            <div class="chat-header-name">Global Chat</div>
+            <div class="chat-header-status" id="chat-status">Connecting...</div>
+          </div>
+          <div class="chat-online-count" id="online-count">0 online</div>
+        </div>
+        <div class="chat-disclaimer">⚠ Public chat — be cool. Don't share personal info.</div>
+        <div class="online-users-bar" id="online-users-bar"></div>
+        <div class="chat-name-bar">
+          <label>Your name:</label>
+          <input class="chat-name-input" id="chat-username" placeholder="Anonymous" maxlength="20"/>
+        </div>
+        <div class="reply-preview" id="reply-preview"><span class="reply-preview-text" id="reply-preview-text"></span><button class="reply-cancel" onclick="cancelReply()">✕</button></div>
+        <div class="chat-messages" id="chat-messages">
+          <div style="text-align:center;color:rgba(255,255,255,.15);font-size:.75rem;padding:1rem">Loading messages...</div>
+        </div>
+        <div class="chat-typing-indicator" id="chat-typing-indicator"></div>
+        <div class="chat-media-row">
+          <button class="chat-media-btn" onclick="toggleGifPicker()">🎞 GIF</button>
+          <button class="chat-media-btn" onclick="document.getElementById('chat-img-upload').click()">🖼 Image</button>
+          <input type="file" id="chat-img-upload" accept="image/*" style="display:none" onchange="sendImageFile(this)"/>
+        </div>
+        <div class="gif-picker" id="gif-picker">
+          <input class="gif-search" id="gif-search" placeholder="Search GIFs..." oninput="searchGifs(this.value)"/>
+          <div class="gif-grid" id="gif-grid"></div>
+        </div>
+        <div class="mention-dropdown" id="mention-dropdown"></div>
+        <div class="chat-input-area">
+          <textarea class="chat-input" id="chat-input" placeholder="Say something..." rows="1" onkeydown="chatKeydown(event)" oninput="autoResize(this);onChatInputTyping();checkMentionTrigger()" maxlength="300"></textarea>
+          <button class="chat-send" onclick="sendChatMsg()">➤</button>
+        </div>
+      </div>
       <div id="dm-panel" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden;background:var(--gb);">
         <div class="dm-header">
           <button class="dm-back" onclick="showChat(document.getElementById('tab-chat'))">←</button>
@@ -2054,11 +2123,12 @@ async function sendAiMessage(){
   // restore saved username
   try {
     var saved = localStorage.getItem('nu_username');
-    if (saved) document.getElementById('chat-username').value = saved;
+    var unEl = document.getElementById('chat-username');
+    if (saved && unEl) unEl.value = saved;
+    if (unEl) unEl.addEventListener('input', function(){
+      try { localStorage.setItem('nu_username', this.value); } catch(e){}
+    });
   } catch(e){}
-  document.getElementById('chat-username').addEventListener('input', function(){
-    try { localStorage.setItem('nu_username', this.value); } catch(e){}
-  });
   // Firebase loads when overlay first opens, not on page load
 })();
 
