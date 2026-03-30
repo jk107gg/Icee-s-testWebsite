@@ -1134,6 +1134,41 @@ input[type="color"].accent-custom{width:28px;height:28px;border:2px solid rgba(2
           <button class="chat-send" onclick="sendChatMsg()">➤</button>
         </div>
       </div>
+      <!-- SUGGESTIONS PANEL -->
+      <div id="suggestions-panel" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden;background:var(--gb);">
+        <div class="dm-header">
+          <div class="dm-title">💡 Suggestions</div>
+        </div>
+        <!-- USER VIEW -->
+        <div id="sugg-user-view" style="display:flex;flex-direction:column;flex:1;overflow-y:auto;padding:1.4rem;gap:.8rem;">
+          <div style="font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.2);">Send a Suggestion</div>
+          <div class="suggestion-form">
+            <div style="font-size:.78rem;color:rgba(255,255,255,.4);margin-bottom:.6rem">Got an idea for a new game, feature, or anything? Send it!</div>
+            <textarea class="suggestion-textarea" id="sugg-textarea" placeholder="Your suggestion..." maxlength="500" rows="4"></textarea>
+            <button class="suggestion-submit" id="sugg-submit-btn" onclick="submitSuggestion()">💡 Send Suggestion</button>
+          </div>
+          <div class="suggestion-sent" id="sugg-sent-msg">✅ Suggestion sent! Thanks for the feedback.</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.2)">Suggestions are anonymous and sent directly to the admin.</div>
+        </div>
+        <!-- ADMIN VIEW -->
+        <div id="sugg-admin-view" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden;">
+          <div style="padding:.6rem 1rem;border-bottom:1px solid var(--gborder);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+            <div style="font-size:.75rem;color:rgba(255,255,255,.4);font-weight:600">👑 Admin — All Suggestions</div>
+            <div style="display:flex;gap:.4rem">
+              <button class="stn-clear" onclick="clearDoneSuggestions()">Clear Done</button>
+              <button class="stn-clear" onclick="adminLogout();showSuggestions(document.getElementById('tab-suggestions'))">Logout</button>
+            </div>
+          </div>
+          <div id="sugg-admin-list" style="flex:1;overflow-y:auto;padding:.8rem;"></div>
+        </div>
+        <!-- ADMIN LOGIN VIEW -->
+        <div id="sugg-login-view" style="display:none;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:1rem;padding:2rem;">
+          <div style="font-size:1.5rem">🔐</div>
+          <div style="font-size:.85rem;color:rgba(255,255,255,.4);text-align:center">Admin access required to view all suggestions</div>
+          <button class="stn-btn" onclick="promptAdminLogin()" style="padding:.5rem 1.2rem">Enter Admin Password</button>
+        </div>
+      </div>
+
       <div id="dm-panel" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden;background:var(--gb);">
         <div class="dm-header">
           <button class="dm-back" onclick="showChat(document.getElementById('tab-chat'))">←</button>
