@@ -170,9 +170,9 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
 .gbar-title{font-size:.68rem;color:rgba(255,255,255,.1);letter-spacing:.2em;text-transform:uppercase;font-weight:500;}
 .gbar-pill{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:999px;padding:.12rem .65rem;font-size:.6rem;color:rgba(255,255,255,.15);letter-spacing:.08em;}
 
-.game-layout{display:flex;flex:1;min-height:0;overflow:hidden;height:0;}
+.game-layout{display:flex;flex:1;min-height:0;overflow:hidden;height:0;position:relative;z-index:2;}
 
-.game-sidebar{width:200px;flex-shrink:0;background:rgba(255,255,255,.015);border-right:1px solid var(--gborder);display:flex;flex-direction:column;overflow-y:auto;padding:.6rem .5rem;gap:.12rem;}
+.game-sidebar{width:200px;flex-shrink:0;background:rgba(0,0,0,.3);border-right:1px solid rgba(255,255,255,.04);display:flex;flex-direction:column;overflow-y:auto;padding:.6rem .5rem;gap:.12rem;}
 .game-sidebar::-webkit-scrollbar{width:2px;}
 .game-sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);}
 .gsidebar-section{font-size:.58rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.14);padding:.55rem .65rem .2rem;margin-top:.4rem;}
@@ -356,7 +356,6 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
 #game-overlay.theme-red{--gborder:rgba(248,113,113,.1);--gblue:#f87171;--gblue-rgb:248,113,113;--gblue-glow:rgba(248,113,113,.2);--gblue-dark:#991b1b;--gblue-darker:#7f1d1d;--gblue-dark2:#b91c1c;--ggreen:#fca5a5;--ggreen-rgb:252,165,165;--gpurple:#f87171;--gb:#130a0a;--gs:#1f0f0f;--gs2:#2a1414;}
 #game-overlay.theme-gold{--gborder:rgba(240,192,96,.1);--gblue:#f0c060;--gblue-rgb:240,192,96;--gblue-glow:rgba(240,192,96,.2);--gblue-dark:#92400e;--gblue-darker:#78350f;--gblue-dark2:#b45309;--ggreen:#fde68a;--ggreen-rgb:253,230,138;--gpurple:#f0c060;--gb:#110e05;--gs:#1c1708;--gs2:#26210b;}
 #game-overlay.theme-white{--gborder:rgba(0,0,0,.1);--gblue:#3b82f6;--gblue-rgb:59,130,246;--gblue-glow:rgba(59,130,246,.2);--gblue-dark:#1d4ed8;--gblue-darker:#1e40af;--gblue-dark2:#2563eb;--ggreen:#22c55e;--ggreen-rgb:34,197,94;--gpurple:#8b5cf6;--gb:#f0f4ff;--gs:#ffffff;--gs2:#e8eef8;}
-#game-overlay.theme-white .game-bar,
 #game-overlay.theme-white .game-sidebar,
 #game-overlay.theme-white .game-search-input,
 #game-overlay.theme-white .gtab,
@@ -372,6 +371,13 @@ nav a:hover,nav a.active-nav{color:#fff;border-bottom-color:var(--gold);}
 #game-overlay.theme-white .gtab.active{background:rgba(59,130,246,.12);color:#1d4ed8;}
 #game-overlay.theme-white .gh-hero{background:rgba(255,255,255,.8);border-color:rgba(0,0,0,.1);}
 #game-overlay.theme-white .gh-hero h2{color:#0f172a;}
+#game-overlay.theme-white .orbit-logo{color:#0f172a;}
+#game-overlay.theme-white .orbit-tagline{color:rgba(0,0,0,.4);}
+#game-overlay.theme-white .orbit-stat{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.1);}
+#game-overlay.theme-white .orbit-stat-num{color:#1d4ed8;}
+#game-overlay.theme-white .orbit-stat-label{color:rgba(0,0,0,.35);}
+#game-overlay.theme-white .orbit-search{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.12);color:#0f172a;}
+#game-overlay.theme-white .orbit-search::placeholder{color:rgba(0,0,0,.25);}
 #game-overlay.theme-white .gh-hero-sub{color:rgba(0,0,0,.45);}
 #game-overlay.theme-white .gh-hstat-num{color:#3b82f6;}
 #game-overlay.theme-white .gh-hstat-label{color:rgba(0,0,0,.35);}
@@ -1341,7 +1347,7 @@ input[type="color"].accent-custom{width:22px;height:22px;border:2px solid rgba(2
 /* ══ ORBIT HOME REDESIGN ══ */
 
 /* Star field canvas */
-.orbit-starfield{position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%;}
+.orbit-starfield{position:absolute;inset:0;z-index:1;pointer-events:none;width:100%;height:100%;}
 
 /* Hero center section */
 .orbit-hero-center{
@@ -1774,8 +1780,8 @@ input[type="color"].accent-custom{width:22px;height:22px;border:2px solid rgba(2
   </div>
 </div>
 
-<div id="game-overlay"><div id="brightness-overlay"></div><canvas class="orbit-starfield" id="orbit-starfield" style="position:fixed;inset:0;z-index:0;width:100%;height:100%;pointer-events:none;"></canvas>
-  <div class="game-layout" style="height:100vh">
+<div id="game-overlay"><div id="brightness-overlay"></div><canvas id="orbit-starfield" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;"></canvas>
+  <div class="game-layout">
     <div class="game-sidebar">
       <div class="game-search-wrap">
         <input class="game-search-input" id="game-search" placeholder="🔍 Search games..." oninput="filterGames(this.value)"/>
@@ -3467,8 +3473,11 @@ function initStarfield() {
   var flakes = [];
   var W, H;
   function resize() {
-    W = canvas.width = canvas.offsetWidth || window.innerWidth;
-    H = canvas.height = canvas.offsetHeight || window.innerHeight;
+    var overlay = document.getElementById('game-overlay');
+    W = canvas.width = (overlay ? overlay.offsetWidth : window.innerWidth) || window.innerWidth;
+    H = canvas.height = (overlay ? overlay.offsetHeight : window.innerHeight) || window.innerHeight;
+    // re-scatter flakes
+    flakes.forEach(function(f){ f.x = Math.random()*W; f.y = Math.random()*H; });
   }
   resize();
   window.addEventListener('resize', resize);
